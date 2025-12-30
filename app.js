@@ -1,8 +1,21 @@
 const express = require('express');
 const fs = require('fs');
+const morgan = require('morgan');
 
 const app = express();
 app.use(express.json());
+
+app.use((req, res, next) => {
+  console.log('Hello from the middleware 😀');
+
+  next();
+});
+
+app.use((req, res, next) => {
+  req.requestTime = new Date().toISOString();
+
+  next();
+});
 
 const port = 3000;
 
@@ -13,6 +26,7 @@ const tours = JSON.parse(
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'Ok',
+    requestedTime: req.requestTime,
     result: tours.length,
     data: {
       tours,
