@@ -15,9 +15,12 @@
   "type": "commonjs",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js "
+    "start": "nodemon server.js ",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "build": "rm -rf dist && mkdir -p dist && cp -R app.js server.js controllers routes public dist"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "express": "^4.22.1",
     "morgan": "^1.10.1"
   }
