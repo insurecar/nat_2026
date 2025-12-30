@@ -3,6 +3,9 @@ const fs = require('fs');
 const morgan = require('morgan');
 
 const app = express();
+
+//1) Middlewares
+app.use(morgan('dev'));
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -18,6 +21,8 @@ app.use((req, res, next) => {
 });
 
 const port = 3000;
+
+//2 Routes handlers
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`, 'utf-8')
@@ -105,6 +110,8 @@ const deleteTour = (req, res) => {
   });
 };
 
+//3 ROUTES
+
 app.route('/api/v1/tours').get(getAllTours).post(createTour);
 app
   .route('/api/v1/tours/:id')
@@ -112,6 +119,7 @@ app
   .delete(deleteTour)
   .get(getTour);
 
+//4. Server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
