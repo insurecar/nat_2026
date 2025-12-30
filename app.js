@@ -21,9 +21,9 @@ app.get('/api/v1/tours', (req, res) => {
 });
 
 app.get('/api/v1/tours/:id', (req, res) => {
-  const tour = tours.filter((tour) => +tour.id === +req.params.id);
+  const tour = tours.find((tour) => +tour.id === +req.params.id);
 
-  if (tour.length === 0) {
+  if (!tour) {
     return res.status(404).json({
       status: 'failed',
       message: 'Invalid ID',
@@ -58,6 +58,38 @@ app.post('/api/v1/tours', (req, res) => {
   );
 });
 
+app.patch('/api/v1/tours/:id', (req, res) => {
+  const tour = tours.find((tour) => +tour.id === +req.params.id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour: '<Updated',
+    },
+  });
+});
+
+app.delete('/api/v1/tours/:id', (req, res) => {
+  const tour = tours.find((tour) => +tour.id === +req.params.id);
+
+  if (!tour) {
+    return res.status(404).json({
+      status: 'fail',
+      message: 'Invalid ID',
+    });
+  }
+  res.status(200).json({
+    status: 'success',
+    data: null,
+  });
+});
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
