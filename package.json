@@ -1,0 +1,23 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Learning node, express, mongo db",
+  "homepage": "https://github.com/insurecar/nat_2026#readme",
+  "bugs": {
+    "url": "https://github.com/insurecar/nat_2026/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/insurecar/nat_2026.git"
+  },
+  "license": "ISC",
+  "author": "rostyslav shyian",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.22.1"
+  }
+}
