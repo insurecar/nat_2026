@@ -1,19 +1,9 @@
 const fs = require('fs');
+const Tour = require('../models/tourModel');
 
 const tours = JSON.parse(
   fs.readFileSync(`${__dirname}/../dev-data/data/tours-simple.json`)
 );
-
-exports.checkId = (req, res, next, val) => {
-  if (+req.params > +tours.length) {
-    return res.status(404).json({
-      status: 'fail',
-      message: 'Invalid ID',
-    });
-  }
-
-  next();
-};
 
 exports.checkBody = (req, res, next) => {
   if (!req.body.name || !req.body.price) {
@@ -26,22 +16,25 @@ exports.checkBody = (req, res, next) => {
   next();
 };
 
-exports.getAllTours = (req, res) => {
+exports.getAllTours = async (req, res) => {
+  const tours = await Tour.find();
   res.status(200).json({
     status: 'Ok',
     requestedTime: req.requestTime,
     result: tours.length,
     data: {
-      tours,
+      tours: tours,
     },
   });
 };
 
-exports.getTour = (req, res) => {
+exports.getTour = async (req, res) => {
+  const id = req.params.id;
+  const tour1 = await Tour.findById(id);
   res.status(200).json({
     status: 'success',
     data: {
-      tour,
+      tour: tour1,
     },
   });
 };
