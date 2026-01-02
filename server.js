@@ -15,7 +15,7 @@ mongoose
   })
   .then((con) => {
     // console.log(con.connections);
-    console.log('DB connection successful :)');
+    console.log('DB connection successful :grinning: ');
   });
 
 const app = require('./app');
