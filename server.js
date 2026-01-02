@@ -24,7 +24,8 @@ const tourSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A tour must have a name'],
-    uniq: true,
+    unique: true,
+    trim: true,
   },
   rating: {
     type: Number,
@@ -37,6 +38,17 @@ const tourSchema = new mongoose.Schema({
 });
 
 const Tour = mongoose.model('Tour', tourSchema);
+
+const testTour = new Tour({
+  name: 'Test Tour',
+
+  price: 947,
+});
+
+testTour
+  .save()
+  .then((doc) => console.log(doc))
+  .catch((e) => console.log(e, 'Error :interrobang:'));
 
 const port = process.env.PORT || 3000;
 
