@@ -8,17 +8,19 @@ exports.getAllTours = async (req, res) => {
 
     excludedFields.forEach((field) => delete queryObj[field]);
 
-    //2) Advanced Filtering
-    const queryStr = JSON.stringify(queryObj);
-    const modifiedQueryStr = queryStr.replace(
-      /\b(gte|gt|lte|lt)\b/g,
-      (match) => `$${match}`
-    );
+    //1B) Advanced Filtering
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
 
-    const queryObjFinal = JSON.parse(modifiedQueryStr);
+    let query = Tour.find(JSON.parse(queryStr));
 
-    const query = Tour.find(queryObjFinal);
+    //2) Sorting
+    if (req.query.sort) {
+      const sortBy = req.query.sort.split(',').join(' ');
+      query = query.sort(sortBy);
+    }
 
+    //3) Field Limiting
     const tours = await query;
     res.status(200).json({
       status: 'Ok',
