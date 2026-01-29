@@ -18,8 +18,9 @@ exports.getAllTours = async (req, res) => {
     if (req.query.sort) {
       const sortBy = req.query.sort.split(',').join(' ');
       query = query.sort(sortBy);
+    } else {
+      query = query.sort('-createdAt');
     }
-
     //3) Field Limiting
     const tours = await query;
     res.status(200).json({
