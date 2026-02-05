@@ -107,6 +107,12 @@ tourSchema.post(/^find/, function (docs, next) {
   next();
 });
 
+//AGGREGATION middleware : runs before any aggregation
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  next();
+});
+
 const Tour = mongoose.model('Tour', tourSchema);
 
 module.exports = Tour;
