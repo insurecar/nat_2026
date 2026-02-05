@@ -63,6 +63,10 @@ const tourSchema = new mongoose.Schema(
       select: false,
     },
     startDates: [Date],
+    secretTour: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: { virtuals: true }, //to include virtual properties when data is output as JSON or Object
@@ -88,6 +92,17 @@ tourSchema.pre('save', function (next) {
 //post middleware : runs after the document is saved to the database
 tourSchema.post('save', function (doc, next) {
   console.log(doc);
+  next();
+});
+
+//QUERY middleware : runs before any find query
+tourSchema.pre(/^find/, function (next) {
+  this.find({ secretTour: { $ne: true } });
+  next();
+});
+
+tourSchema.post(/^find/, function (docs, next) {
+  console.log(`Query took ${Date.now() - this.start} milliseconds!`);
   next();
 });
 
