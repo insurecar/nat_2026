@@ -98,6 +98,7 @@ tourSchema.post('save', function (doc, next) {
 //QUERY middleware : runs before any find query
 tourSchema.pre(/^find/, function (next) {
   this.find({ secretTour: { $ne: true } });
+  this.start = Date.now();
   next();
 });
 
