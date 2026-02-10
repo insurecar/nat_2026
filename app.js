@@ -8,8 +8,6 @@ const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
-console.log('12536152361523', process.env.PORT);
-
 //1) Middlewares
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
