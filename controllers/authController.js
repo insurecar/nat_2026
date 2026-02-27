@@ -105,3 +105,29 @@ exports.restrictTo = (...roles) =>
     }
     next();
   });
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  // 1) Get user based on POSTed email
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    return next(new AppError('There is no user with email address.', 404));
+  }
+
+  // 2) Generate the random reset token
+
+  const resetToken = user.createPasswordResetToken();
+  await user.save({ validateBeforeSave: false });
+
+  // 3) Send it to user's email
+  res.status(500).json({
+    status: 'fail',
+    message: 'This rout has not implemented yet',
+  });
+});
+
+exports.resetPassword = (req, res) => {
+  res.status(500).json({
+    status: 'fail',
+    message: 'This rout has not implemented yet',
+  });
+};
